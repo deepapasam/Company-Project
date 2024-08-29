@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Employee</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-size: 1em;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        input[readonly] {
+            background-color: #f0f0f0;
+            cursor: not-allowed;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Edit Employee</h1>
+        <!-- Form action URL uses the empId path variable -->
+        <form th:action="@{/employees/{empId}(empId=${employee.empId})}" th:object="${employee}" method="post">
+            
+            <!-- Use a hidden field to ensure that the method is POST -->
+            <input type="hidden" name="_method" value="POST"/> <!-- HTTP method override -->
+
+            <label for="empId">Employee ID:</label>
+            <input type="text" id="empId" th:field="*{empId}" readonly/>
+            
+            <label for="firstEmpName">First Name:</label>
+            <input type="text" id="firstEmpName" th:field="*{firstEmpName}"/>
+            
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" th:field="*{lastName}"/>
+            
+            <label for="salary">Salary:</label>
+            <input type="text" id="salary" th:field="*{salary}"/>
+            
+            <label for="bloodGroup">Blood Group:</label>
+            <input type="text" id="bloodGroup" th:field="*{bloodGroup}"/>
+            
+            <label for="empPhNo">Phone Number:</label>
+            <input type="text" id="empPhNo" th:field="*{empPhNo}"/>
+            
+            <label for="emilId">Email:</label>
+            <input type="text" id="emilId" th:field="*{emilId}"/>
+            
+            <button type="submit">Save</button>
+        </form>
+        <a href="/employees/homepage" class="back-link">Back to Home</a>
+    </div>
+</body>
+</html>

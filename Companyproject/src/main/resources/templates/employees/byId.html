@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Employee by ID</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+            margin: 20px 0;
+            color: #333;
+        }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8); /* White background with 80% opacity */
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        label {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        input[type="number"] {
+            padding: 8px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 1em;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            text-align: center;
+            margin: 20px;
+            font-size: 1.2em;
+            color: #e74c3c;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin: 20px;
+            font-size: 1.1em;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #e9e9e9;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+            margin-right: 10px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .actions form {
+            display: inline;
+        }
+        /* Loader Styles */
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #007bff;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            display: none; /* Hidden by default */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+         h1 {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: orangered;
+            font-size: 36px;
+            text-shadow: 2px 5px 4px rgba(3, 5, 9, 0.5);
+        }
+    </style>
+</head>
+<body>
+	<br>
+	<br>
+	<br><br><br><br>
+    <div class="loader" id="loader"></div>
+
+    <h1>Enter The Employee by ID</h1>
+    
+    <!-- Container for Search Form -->
+    <div class="form-container">
+        <!-- Search Form -->
+        <form id="searchForm" th:action="@{/employees/byid}" method="get">
+            <label for="empId">Employee ID:</label>
+            <input type="number" id="empId" name="empId" placeholder="Enter Employee ID" required />
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <!-- Employee Details -->
+    <div th:if="${employee != null}">
+        <h2>Employee Details</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Salary</th>
+                    <th>Blood Group</th>
+                    <th>Phone Number</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <body>
+                <tr>
+                    <td th:text="${employee.empId}"></td>
+                    <td th:text="${employee.firstEmpName}"></td>
+                    <td th:text="${employee.lastName}"></td>
+                    <td th:text="${employee.salary}"></td>
+                    <td th:text="${employee.bloodGroup}"></td>
+                    <td th:text="${employee.empPhNo}"></td>
+                    <td th:text="${employee.emilId}"></td>
+                    <td class="actions">
+                        <a th:href="@{/employees/{empId}(empId=${employee.empId})}">View</a> |
+                        <a th:href="@{/employees/{empId}/edit(empId=${employee.empId})}">Edit</a> |
+                        <form th:action="@{/employees/{empId}/delete(empId=${employee.empId})}" method="post" style="display:inline;">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </body>
+        </table>
+    </div>
+
+    <!-- Message if no results -->
+    <div th:if="${employee == null}" class="message">
+        <p>No employee found with the given ID.</p>
+    </div>
+
+    <a href="/employees/homepage" class="back-link">Back to Homepage</a>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from submitting immediately
+            
+            var loader = document.getElementById('loader');
+            loader.style.display = 'block'; // Show the loader
+
+            setTimeout(function() {
+                document.getElementById('searchForm').submit(); // Submit the form after 3 seconds
+            }, 1000); // 3000 milliseconds = 3 seconds
+        });
+    </script>
+</body>
+</html>

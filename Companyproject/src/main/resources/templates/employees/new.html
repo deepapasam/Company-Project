@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee List</title>
+</head>
+<body>
+    <h1>Employee List</h1>
+
+    <!-- Display success message if available -->
+    <div th:if="${successMessage}" class="alert alert-success">
+        <p th:text="${successMessage}"></p>
+    </div>
+
+    <ul>
+        <!-- Iterate over the list of employees -->
+        <li th:each="employee : ${employees}">
+            <span th:text="${employee.empId}">Employee ID</span>
+            <span th:text="${employee.firstEmpName}">First Name</span>
+            <span th:text="${employee.lastName}">Last Name</span>
+            <a th:href="@{/employees/{empId}/edit(empId=${employee.empId})}">Edit</a>
+            <form th:action="@{/employees/{empId}/delete(empId=${employee.empId})}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="post"/> <!-- Ensure the form method is POST -->
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+    </ul>
+
+    <a href="/employees/new">Add New Employee</a>
+</body>
+</html>

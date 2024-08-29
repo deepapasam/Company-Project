@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Employees by Name</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .loading {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+            z-index: 1000;
+        }
+        .loading.active {
+            display: block;
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: auto;
+            text-align: center;
+        }
+        .modal-content h2 {
+            margin: 0;
+            color: #333;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+         h1 {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: orangered;
+            font-size: 36px;
+            text-shadow: 2px 5px 4px rgba(3, 5, 9, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Employees by Name</h1>
+    
+    <!-- Loading Indicator -->
+    <div id="loading" class="loading">Loading...</div>
+
+    <!-- Search Form -->
+    <form id="searchForm" th:action="@{/employees/byname}" method="get">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter name" required /><br><br>
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- Results Table -->
+    <div id="resultsContainer">
+        <div th:if="${param.name != null and not #strings.isEmpty(param.name)}">
+            <div th:if="${employees != null}">
+                <h2>Search Results</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Salary</th>
+                            <th>Blood Group</th>
+                            <th>Phone Number</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="employee : ${employees}">
+                            <td th:text="${employee.empId}"></td>
+                            <td th:text="${employee.firstEmpName}"></td>
+                            <td th:text="${employee.lastName}"></td>
+                            <td th:text="${employee.salary}"></td>
+                            <td th:text="${employee.bloodGroup}"></td>
+                            <td th:text="${employee.empPhNo}"></td>
+                            <td th:text="${employee.emilId}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Message if no results -->
+            <div th:if="${employees == null or #lists.isEmpty(employees)}" class="error-message">
+                <p>No employees found with the given name.</p>
+            </div>
+        </div>
+
+        <!-- Message if no name is entered -->
+        <div th:if="${param.name == null or #strings.isEmpty(param.name)}" class="error-message">
+            <p>Please enter a name to search.</p>
+        </div>
+    </div>
+
+    <!-- Modal Popup -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalMessage">Details not found</h2>
+        </div>
+    </div>
+
+    <a href="/employees/homepage">Back to Homepage</a>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var form = document.getElementById('searchForm');
+            var loading = document.getElementById('loading');
+            var modal = document.getElementById('modal');
+            var closeModal = document.querySelector('.close');
+            var resultsContainer = document.getElementById('resultsContainer');
+
+            form.addEventListener('submit', function(event) {
+                // Show the loading indicator
+                loading.classList.add('active');
+
+                // Add a timeout to simulate loading time
+                setTimeout(function() {
+                    // Hide loading indicator
+                    loading.classList.remove('active');
+
+                    // Check if the resultsContainer has the 'error-message' class
+                    var hasNoResults = resultsContainer.querySelector('.error-message') !== null;
+
+                    if (hasNoResults) {
+                        modal.style.display = 'flex';
+                        // Hide the modal after 4 seconds
+                        setTimeout(function() {
+                            modal.style.display = 'none';
+                        }, 4000); // Keep modal visible for 4 seconds
+                    }
+                }, 2000); // Show loading for 2 seconds
+
+                // Optional: If you want to prevent the form from submitting immediately (for testing)
+                // event.preventDefault();
+            });
+
+            closeModal.onclick = function() {
+                modal.style.display = 'none';
+            };
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            };
+        });
+    </script>
+</body>
+</html>

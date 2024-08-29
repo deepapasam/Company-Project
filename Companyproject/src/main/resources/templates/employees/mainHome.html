@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fusion5 - Home</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            background-color: #0056b3;
+            border-radius: 4px;
+        }
+      .hero {
+    background: url('/images/Fusion5.png') no-repeat center center;
+    background-size: contain;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+    
+    /* Flexbox properties for alignment */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align items to the top */
+    align-items: center; /* Center items horizontally */
+    height: 50vh; /* Ensure the hero section takes the full viewport height */
+    box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+
+       .hero h1,h4 {
+            color:gray; /* Change to your preferred color */
+            
+            margin: 0;
+        }
+        .hero p {
+            font-size: 24px;
+        }
+        .section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        .section p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .services {
+            background-color: rgb(128, 128, 128);
+        }
+        .services .service-item {
+            margin: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .contact-form input, .contact-form textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .contact-form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .contact-form button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header and Navigation -->
+    <header>
+        <div class="navbar">
+            <a href="/employees/homepage">Home</a>
+            <a href="/about">About Us</a>
+            <a href="/services">Services</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Welcome to Fusion5</h1><br><br><br>
+        <h4>Your partner in innovative solutions</h4>
+    </section>
+
+    <!-- About Us Section -->
+    <section class="section">
+        <h2>About Us</h2>
+        <p>At Fusion5, we are dedicated to providing top-notch services to help your business thrive. Our team of experts is committed to delivering innovative solutions tailored to your needs.</p>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section services">
+        <h2>Our Services</h2>
+        <div class="service-item">
+            <h3>Consulting</h3>
+            <p>Expert advice to guide your business through challenges and opportunities.</p>
+        </div>
+        <div class="service-item">
+            <h3>Development</h3>
+            <p>Custom software solutions designed to meet your specific needs.</p>
+        </div>
+        <div class="service-item">
+            <h3>Support</h3>
+            <p>Reliable support to ensure your systems run smoothly and efficiently.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section">
+        <h2>Contact Us</h2>
+        <form class="contact-form" action="/contact" method="post">
+            <input type="text" name="name" placeholder="Your Name" required />
+            <input type="email" name="email" placeholder="Your Email" required />
+            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Fusion5. All rights reserved.</p>
+        <p><a href="/privacy">Privacy Policy</a> | <a href="/terms">Terms of Service</a></p>
+    </footer>
+</body>
+</html>

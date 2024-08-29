@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Employee</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to external stylesheet -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8; /* Light gray-blue background color */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #ffffff; /* White background for the container */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid #dcdcdc; /* Light gray border for subtle definition */
+            text-align: center; /* Center-align text */
+        }
+
+        .container img {
+            max-width: 150px; /* Ensure logo size */
+            margin-bottom: 20px; /* Space below the logo */
+            /* Placeholder image for testing */
+            /* src: "https://via.placeholder.com/150" */
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 10px 0 5px;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        input[type="email"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Additional styling for form fields and error messages */
+        input:invalid {
+            border-color: #e74c3c; /* Red border for invalid input */
+        }
+
+        input:valid {
+            border-color: #2ecc71; /* Green border for valid input */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+		<br><br><br><br><br><br>
+        <!-- Use a placeholder image to check if the path or image file is the issue -->
+        <img src="/images/Fusion5.png" alt="Company Logo" />
+        <h1>Fill The Employee Form</h1>
+        <form th:action="@{/employees/add}" th:object="${employee}" method="post">
+            <label for="empId">Employee ID:</label>
+            <input type="text" id="empId" th:field="*{empId}" required />
+            <br/>
+            <label for="firstEmpName">First Name:</label>
+            <input type="text" id="firstEmpName" th:field="*{firstEmpName}" required />
+            <br/>
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" th:field="*{lastName}" required />
+            <br/>
+            <label for="salary">Salary:</label>
+            <input type="text" id="salary" th:field="*{salary}" required />
+            <br/>
+            <label for="bloodGroup">Blood Group:</label>
+            <input type="text" id="bloodGroup" th:field="*{bloodGroup}" required />
+            <br/>
+            <label for="empPhNo">Phone Number:</label>
+            <input type="tel" id="empPhNo" th:field="*{empPhNo}" pattern="\d{10}" title="Phone number must be exactly 10 digits" required />
+            <br/>
+            <label for="emilId">Email:</label>
+            <input type="email" id="emilId" th:field="*{emilId}" pattern="^[^@]+@[^@]+\.[cC][oO][mM]$" title="Email must end with .com" required />
+            <br/><br>
+            <button type="submit">Save</button>
+        </form>
+        <a href="/employees/homepage">Back to Homepage</a>
+    </div>
+</body>
+</html>

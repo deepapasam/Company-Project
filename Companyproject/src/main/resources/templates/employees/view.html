@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Details</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #e0eafc, #cfdef3); /* Gradient background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            background: #ffffff; /* White background for content */
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            border: 1px solid #ddd; /* Light border for subtle definition */
+        }
+
+        h1 {
+            color: #007bff; /* Blue color for the header */
+            margin-bottom: 20px;
+            font-size: 32px;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Subtle shadow for text */
+        }
+
+        p {
+            font-size: 18px;
+            margin: 15px 0;
+            line-height: 1.6; /* Increased line-height for better readability */
+        }
+
+        span {
+            font-weight: 600; /* Bold text for emphasis */
+            color: #333; /* Darker color for details */
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            background-color: #007bff;
+            border: 2px solid #007bff; /* Matching border color */
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        a:hover {
+            background-color: #0056b3;
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            p {
+                font-size: 16px;
+            }
+
+            a {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Details</h1>
+        <p>ID: <span th:text="${employee.empId}"></span></p>
+        <p>First Name: <span th:text="${employee.firstEmpName}"></span></p>
+        <p>Last Name: <span th:text="${employee.lastName}"></span></p>
+        <p>Salary: <span th:text="${employee.salary}"></span></p>
+        <p><a href="/employees/homepage">Back to Home</a></p>
+    </div>
+</body>
+</html>
